@@ -43,6 +43,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageURL() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if ((!_imageUrlController.text.startsWith("http") &&
+              !_imageUrlController.text.startsWith("https")) ||
+          (!_imageUrlController.text.endsWith(".png") &&
+              !_imageUrlController.text.endsWith(".jpeg") &&
+              !_imageUrlController.text.endsWith(".jpg"))) {
+        return;
+      }
       setState(() {});
     }
   }
@@ -109,6 +116,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Please input value";
+                  }
+                  if (double.tryParse(value) == null) {
+                    return "Please valid value";
+                  }
+                  if (double.parse(value) <= 0) {
+                    return "Please more than 0";
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
@@ -124,6 +143,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Please input value";
+                  }
+                  if (value.length < 10) {
+                    return "Please 10 length";
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
@@ -167,6 +195,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
                       onFieldSubmitted: (_) => _saveForm(),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please input value";
+                        }
+                        if (!value.startsWith("http") &&
+                            !value.startsWith("https")) {
+                          return "Please valid value";
+                        }
+                        if (!value.endsWith(".png") &&
+                            !value.endsWith(".jpeg") &&
+                            !value.endsWith(".jpg")) {
+                          return "Please valid image";
+                        }
+                        return null;
+                      },
                       onSaved: (value) {
                         _editedProduct = Product(
                           id: null,
