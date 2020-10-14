@@ -67,10 +67,10 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     //? JSON = JavaScript Object Notation
     const url = "https://learn-flutter-2be71.firebaseio.com/products.json";
-    http
+    return http
         .post(
       url,
       body: json.encode({
