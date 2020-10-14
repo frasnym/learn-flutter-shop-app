@@ -26,9 +26,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
   );
   var _initValues = {
-    'title': '',
-    'description': '',
-    'price': '',
+    'title': 'Init title',
+    'description': 'Init description',
+    'price': '1',
     'imageUrl': '',
   };
   var _isInit = true;
@@ -55,7 +55,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'imageUrl': '',
         };
         _imageUrlController.text = _editedProduct.imageUrl;
-      }
+      } else _imageUrlController.text = "https://pbs.twimg.com/profile_images/1044613727071490048/IcnJ5uxz_400x400.jpg";
       _isInit = false;
     }
     super.didChangeDependencies();
@@ -105,7 +105,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
     } else {
       Provider.of<Products>(context, listen: false)
           .addProduct(_editedProduct)
-          .then((_) {
+          .catchError((error) {
+        return showDialog<Null>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("An error occured!"),
+            // content: Text(error.toString()),
+            content: const Text("Something went wrong!"),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("Okay"),
+              ),
+            ],
+          ),
+        );
+      }).then((_) {
         setState(() {
           _isLoading = false;
         });

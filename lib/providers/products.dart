@@ -67,9 +67,9 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> addProduct(Product product) {
+  Future<dynamic> addProduct(Product product) {
     //? JSON = JavaScript Object Notation
-    const url = "https://learn-flutter-2be71.firebaseio.com/products.json";
+    const url = "https://learn-flutter-2be71.firebaseio.com/products";
     return http
         .post(
       url,
@@ -92,6 +92,9 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 
