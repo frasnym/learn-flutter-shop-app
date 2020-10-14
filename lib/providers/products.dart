@@ -67,21 +67,21 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<dynamic> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     //? JSON = JavaScript Object Notation
-    const url = "https://learn-flutter-2be71.firebaseio.com/products";
-    return http
-        .post(
-      url,
-      body: json.encode({
-        "title": product.title,
-        "description": product.description,
-        "price": product.price,
-        "imageUrl": product.imageUrl,
-        "isFavorite": product.isFavorite,
-      }),
-    )
-        .then((response) {
+    const url = "https://learn-flutter-2be71.firebaseio.com/products.json";
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          "title": product.title,
+          "description": product.description,
+          "price": product.price,
+          "imageUrl": product.imageUrl,
+          "isFavorite": product.isFavorite,
+        }),
+      );
+
       final newProduct = Product(
         id: json.decode(response.body)["name"],
         title: product.title,
@@ -92,10 +92,10 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
