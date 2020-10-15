@@ -69,7 +69,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    const url = "https://learn-flutter-2be71.firebaseio.com/products.json";
+    const url = "https://learn-flutter-79ee6.firebaseio.com/products.json";
 
     try {
       final response = await http.get(url);
@@ -98,7 +98,7 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     //? JSON = JavaScript Object Notation
-    const url = "https://learn-flutter-2be71.firebaseio.com/products.json";
+    const url = "https://learn-flutter-79ee6.firebaseio.com/products.json";
     try {
       final response = await http.post(
         url,
@@ -131,7 +131,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url =
-          "https://learn-flutter-2be71.firebaseio.com/products/$id.json";
+          "https://learn-flutter-79ee6.firebaseio.com/products/$id.json";
       await http.patch(
         url,
         body: json.encode({
@@ -148,7 +148,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = "https://learn-flutter-2be71.firebaseio.com/products/$id.json";
+    final url = "https://learn-flutter-79ee6.firebaseio.com/products/$id.json";
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
 

@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "Lato",
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        // home: ProductsOverviewScreen(),
         home: AuthScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
