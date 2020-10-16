@@ -25,6 +25,10 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  String get userId {
+    return _userId;
+  }
+
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url =
@@ -57,7 +61,7 @@ class Auth with ChangeNotifier {
       );
       notifyListeners();
     } catch (error) {
-      print("$error-asd");
+      print("$error-[_authenticate]");
       throw error;
     }
   }
